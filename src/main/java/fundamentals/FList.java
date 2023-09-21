@@ -128,12 +128,12 @@ public abstract class FList<A> implements Iterable<A> {
 
         @Override
         public A head() {
-            throw new NoSuchElementException();
+            throw new IllegalArgumentException();
         }
 
         @Override
         public FList<A> tail() {
-            throw new NoSuchElementException();
+            throw new IllegalArgumentException();
         }
     }
 

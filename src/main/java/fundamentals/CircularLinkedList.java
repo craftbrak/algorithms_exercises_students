@@ -86,6 +86,17 @@ public class CircularLinkedList<Item> implements Iterable<Item> {
         if (index >n-1 && index < 0) throw new IndexOutOfBoundsException();
         Node removed= null;
         Node current = this.last.next;
+        if (index == 0) {
+            removed = last.next;
+            if (n == 1) {
+                last = null;
+            } else {
+                last.next = removed.next;
+            }
+            n--;
+            nOp++;
+            return removed.item;
+        }
         for (int i = 0; i < n; i++) {
             if (i == index-1 ){
                 removed = current.next;
