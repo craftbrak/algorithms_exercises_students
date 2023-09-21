@@ -42,13 +42,13 @@ public class RabinKarp {
     public RabinKarp(String[] pat) {
 
 
-         this.pat = pat; // save pattern (only needed for Las Vegas)
-         this.M = pat.length();
-        Q = 4463;
-        RM = 1;
-
-        for (int i = 1; i <= M - 1; i++) // Compute R^(M-1) % Q for use
-            RM = (R * RM) % Q; // in removing leading digit.
+//         this.pat = pat; // save pattern (only needed for Las Vegas)
+//         this.M = pat.length();
+//        Q = 4463;
+//        RM = 1;
+//
+//        for (int i = 1; i <= M - 1; i++) // Compute R^(M-1) % Q for use
+//            RM = (R * RM) % Q; // in removing leading digit.
 
     }
 
