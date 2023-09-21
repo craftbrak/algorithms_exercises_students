@@ -82,9 +82,9 @@ public class CircularLinkedList<Item> implements Iterable<Item> {
      * Shifts any subsequent elements to the left (subtracts one from their indices).
      * Returns the element that was removed from the list.
      */
-    public Item remove(int index) {
+    public Item remove(int index) throws IndexOutOfBoundsException{
         if (index >n-1 && index < 0) throw new IndexOutOfBoundsException();
-        Node removed= null;
+        Node removed = null;
         Node current = this.last.next;
         if (index == 0) {
             removed = last.next;
@@ -139,6 +139,7 @@ public class CircularLinkedList<Item> implements Iterable<Item> {
             this.nOpp = nOp;
         }
 
+        // TODO You probably need a constructor here and some instance variables
 
 
         @Override
@@ -147,7 +148,7 @@ public class CircularLinkedList<Item> implements Iterable<Item> {
         }
 
         @Override
-        public Item next() {
+        public Item next() throws ConcurrentModificationException {
             if (this.nOpp!= nOp)throw new ConcurrentModificationException();
             if (hasNext()){
                 if (current == 0){
