@@ -89,8 +89,13 @@ public abstract class FList<A> implements Iterable<A> {
 
     // return a list on which only the elements that satisfies predicate are kept
     public final FList<A> filter(Predicate<A> f) {
-        // TODO
-         return null;;
+        if (this.isEmpty()) {
+            return nil();
+        } else if (f.test(this.head())) {
+            return this.tail().filter(f).cons(this.head());
+        } else {
+            return this.tail().filter(f);
+        }
     }
 
 
@@ -134,7 +139,6 @@ public abstract class FList<A> implements Iterable<A> {
 
     private static final class Cons<A> extends FList<A> {
 
-        // TODO add instance variables
         private final A head;
         private final FList<A> tail;
 
