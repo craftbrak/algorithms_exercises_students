@@ -53,4 +53,5 @@ public class BinaryHeapTest {
             heap.push(i);
         }
     }
+}
     

@@ -89,13 +89,8 @@ public abstract class FList<A> implements Iterable<A> {
 
     // return a list on which only the elements that satisfies predicate are kept
     public final FList<A> filter(Predicate<A> f) {
-        if (this.isEmpty()) {
-            return  nil();
-        } else if (f.test(this.head())) {
-            return this.tail().filter(f).cons(this.head());
-        } else {
-            return this.tail().filter(f);
-        }
+        // TODO
+         return null;;
     }
 
 
