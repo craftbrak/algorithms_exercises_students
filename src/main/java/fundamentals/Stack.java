@@ -49,7 +49,9 @@ public interface Stack<E> {
 class LinkedStack<E> implements Stack<E> {
 
     private Node<E> top;        // the node on the top of the stack
-    private int size;        // size of the stack
+
+    private Node<E> bottom;
+    private int size = 0;        // size of the stack
 
     // helper linked list class
     private class Node<E> {
@@ -64,25 +66,52 @@ class LinkedStack<E> implements Stack<E> {
 
     @Override
     public boolean empty() {
-        // TODO Implement empty method
-         return false;
+        return size < 1;
     }
 
     @Override
     public E peek() throws EmptyStackException {
-        // TODO Implement peek method
-         return null;
+        if (size == 0) {
+            throw new EmptyStackException();
+        } else {
+            return top.item;
+        }
     }
 
     @Override
     public E pop() throws EmptyStackException {
-        // TODO Implement pop method
-         return null;
+        if (size == 0) {
+            throw new EmptyStackException();
+        } else {
+            E removed = top.item;
+            if (size == 1) {
+                top = null;
+                bottom = null;
+            } else {
+                // faire passer le top au node precedant et mettre le next de ce node precedant a null
+                Node<E> current = bottom;
+                for (int i = 0; i < size - 2; i++) {
+                    current = current.next;
+                }
+                top = current;
+                current.next = null;
+            }
+            size --;
+            return removed;
+        }
     }
 
     @Override
     public void push(E item) {
-        // TODO Implement push method
+        Node<E> new_top = new Node<>(item, null);
+        if (size == 0) {
+            top = new_top;
+            bottom = new_top;
+        } else {
+            top.next = new_top;
+            top = new_top;
+        }
+        size ++;
     }
 }
 
