@@ -150,15 +150,17 @@ public class CircularLinkedList<Item> implements Iterable<Item> {
         @Override
         public Item next() throws ConcurrentModificationException {
             if (this.nOpp!= nOp)throw new ConcurrentModificationException();
-            if (hasNext()){
+            if (hasNext() && next!= null){
                 if (current == 0){
                     current++;
                     return next.item;
                 }
-                Node n = next;
-                next= next.next;
-                current++;
-                return n.next.item;
+                if (next.next!= null){
+                    Node n = next;
+                    next= next.next;
+                    current++;
+                    return n.next.item;
+                }
             }
             return null;
         }

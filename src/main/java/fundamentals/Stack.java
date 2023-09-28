@@ -1,6 +1,5 @@
 package fundamentals;
 
-import java.util.Arrays;
 import java.util.EmptyStackException;
 
 /**
@@ -146,7 +145,9 @@ class  ArrayStack<E> implements Stack<E> {
     @Override
     public void push(E item) {
         if(size == this.array.length){
-            System.arraycopy(array, 0 ,array,0 , array.length*2);
+            E[] newArray = (E[]) new Object[this.array.length * 2];
+            System.arraycopy(array, 0 ,newArray,0 , this.array.length);
+            this.array= newArray;
         }
         array[size]=item;
         size++;
