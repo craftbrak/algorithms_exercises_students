@@ -45,7 +45,7 @@ public class StackWithTwoQueues<E> {
      */
     public E pop() throws EmptyStackException {
         if (this.empty()) throw new  EmptyStackException();
-        return queue1.remove();
+        return queue1.poll();
     }
 
     /**
