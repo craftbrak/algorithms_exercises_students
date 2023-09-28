@@ -135,7 +135,7 @@ public class CircularLinkedList<Item> implements Iterable<Item> {
         private long nOpp;
         public ListIterator(Node last, int size, long nOp){
             if (last != null) {
-                this.next = last;
+                this.next = last.next;
             }
             this.size = size;
             this.nOpp = nOp;
