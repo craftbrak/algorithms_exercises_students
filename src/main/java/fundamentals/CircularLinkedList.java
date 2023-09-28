@@ -83,7 +83,7 @@ public class CircularLinkedList<Item> implements Iterable<Item> {
      * Returns the element that was removed from the list.
      */
     public Item remove(int index) throws IndexOutOfBoundsException{
-        if (index >n-1 && index < 0) throw new IndexOutOfBoundsException();
+        if (index > n-1 || index < 0) throw new IndexOutOfBoundsException();
         Node removed = null;
         Node current = this.last.next;
         if (index == 0) {
@@ -116,7 +116,7 @@ public class CircularLinkedList<Item> implements Iterable<Item> {
      * @return an iterator that iterates through the items in FIFO order.
      */
     public Iterator<Item> iterator() {
-        return new ListIterator(last.next , n , nOp);
+        return new ListIterator(last , n , nOp);
     }
 
     /**
@@ -133,8 +133,10 @@ public class CircularLinkedList<Item> implements Iterable<Item> {
         private int size;
         private int current;
         private long nOpp;
-        public ListIterator(Node next, int size, long nOp){
-            this.next = next;
+        public ListIterator(Node last, int size, long nOp){
+            if (last != null) {
+                this.next = last;
+            }
             this.size = size;
             this.nOpp = nOp;
         }
