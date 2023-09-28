@@ -25,7 +25,7 @@ public class StackWithTwoQueues<E> {
      * without removing it from the stack
      */
     public boolean empty() {
-         return false;
+         return queue1.isEmpty();
     }
 
     /**
@@ -34,7 +34,8 @@ public class StackWithTwoQueues<E> {
      * @throws EmptyStackException if the stack is empty
      */
     public E peek() throws EmptyStackException {
-         return queue1.peek();
+        if (this.empty()) throw new  EmptyStackException();
+        return queue1.peek();
     }
 
     /**
@@ -43,7 +44,8 @@ public class StackWithTwoQueues<E> {
      * @throws EmptyStackException if the stack is empty
      */
     public E pop() throws EmptyStackException {
-         return queue1.remove();
+        if (this.empty()) throw new  EmptyStackException();
+        return queue1.remove();
     }
 
     /**
@@ -52,17 +54,13 @@ public class StackWithTwoQueues<E> {
      * @param item the item to add
      */
     public void push(E item) {
-        if (queue1.isEmpty()){
-            queue1.add(item);
-        }else {
-            for (int i = 0; i < queue1.size(); i++) {
-                queue2.add(queue1.remove());
-            }
-            queue1.add(item);
-            for (int i = 0; i < queue2.size(); i++) {
-                queue1.add(queue2.remove());
-            }
+        queue2.add(item);
+        while (!queue1.isEmpty()){
+            queue2.add(queue1.poll());
         }
+        Queue<E> temp = queue1;
+        queue1 = queue2;
+        queue2 = temp;
     }
 
 }
