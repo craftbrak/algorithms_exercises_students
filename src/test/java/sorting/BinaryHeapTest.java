@@ -53,5 +53,73 @@ public class BinaryHeapTest {
             heap.push(i);
         }
     }
+
+    // BEGIN STRIP
+
+    static Stream<Instance> dataProvider() {
+        return Stream.of(new File("data/sorting.BinaryHeap").listFiles())
+                .filter(file -> !file.isDirectory())
+                .map(file -> new Instance(file.getPath()));
+    }
+
+    @ParameterizedTest
+    @Grade(value = 1)
+    @GradeFeedback(message = "Sorry, something is wrong with your algorithm. Hint: debug on the small example")
+    @MethodSource("dataProvider")
+    @Order(1)
+    public void testMin(Instance instance)  {
+        BinaryHeap heap = new BinaryHeap(instance.size*2);
+        int min = instance.input[0];
+        for (int value : instance.input) {
+            heap.push(value);
+            if (value < min) {
+                min = value;
+            }
+            assertEquals(min, heap.getRoot());
+        }
+    }
+
+    @ParameterizedTest
+    @Grade(value = 1)
+    @GradeFeedback(message = "Do not forget to resize !")
+    @MethodSource("dataProvider")
+    @Order(1)
+    public void testResize(Instance instance) {
+        BinaryHeap heap = new BinaryHeap(instance.size / 2);
+        for (int value : instance.input) {
+            heap.push(value);
+        }
+    }
+
+    @ParameterizedTest
+    @Grade(value = 1, cpuTimeout = 700)
+    @GradeFeedback(message = "Check the complexity of your algorithm")
+    @MethodSource("dataProvider")
+    @Order(2)
+    public void testComplexity(Instance instance) {
+        BinaryHeap heap = new BinaryHeap(instance.size*2);
+        for (int value : instance.input) {
+            heap.push(value);
+        }
+    }
+
+    static class Instance {
+        int [] input;
+        int size;
+
+        public Instance(String file) {
+            try {
+                Scanner scan = new Scanner(new FileInputStream(file));
+                int n = scan.nextInt();
+                this.size = n;
+                this.input = new int[n];
+                for (int i = 0; i < n; i++) {
+                    this.input[i] = scan.nextInt();
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    // END STRIP
 }
-    
