@@ -18,8 +18,9 @@ import java.io.FileNotFoundException;
 import java.io.File;
 import java.util.Scanner;
 import java.util.stream.Stream;
-
+//BEGIN STRIP
 import java.lang.Math;
+//END STRIP
 
 @ExtendWith(ConditionalOrderingExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -60,11 +61,12 @@ public class MinMaxHeapTest {
         assertEquals(0, min);
         assertEquals(6, max);
     }
-    
+
+    // BEGIN STRIP
     static Stream<Instance> dataProvider() {
         return Stream.of(new File("data/sorting.BinaryHeap").listFiles())
-            .filter(file -> !file.isDirectory())
-            .map(file -> new Instance(file.getPath()));
+                .filter(file -> !file.isDirectory())
+                .map(file -> new Instance(file.getPath()));
     }
 
     @ParameterizedTest
@@ -101,8 +103,8 @@ public class MinMaxHeapTest {
 
     static Stream<Instance> dataProviderComplexity() {
         return Stream.of(new File("data/sorting.BinaryHeap").listFiles())
-            .filter(file -> !file.isDirectory() && file.getName().startsWith("in_10000"))
-            .map(file -> new Instance(file.getPath()));
+                .filter(file -> !file.isDirectory() && file.getName().startsWith("in_10000"))
+                .map(file -> new Instance(file.getPath()));
     }
 
     @ParameterizedTest
@@ -156,4 +158,5 @@ public class MinMaxHeapTest {
             }
         }
     }
+    // END STRIP
 }
