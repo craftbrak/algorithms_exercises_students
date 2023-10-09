@@ -57,8 +57,7 @@ public class MinMaxHeap<Key extends Comparable<Key>> {
      * Expected time complexity: O(1)
      */
     public Key min() {
-        // TODO STUDENT
-        return null;
+        return content[1];
     }
 
     /**
@@ -66,8 +65,16 @@ public class MinMaxHeap<Key extends Comparable<Key>> {
      * Expected time complexity: O(1)
      */
     public Key max() {
-        // TODO STUDENT
-        return null;
+        if (this.size == 0) {
+            return null;
+        }
+        if (this.size == 1) {
+            return content[1];
+        }
+        if (this.size == 2) {
+            return content[2];
+        }
+        return higherThan(content[2], content[3]) ? content[2] : content[3];
     }
 
     /**
@@ -121,8 +128,38 @@ public class MinMaxHeap<Key extends Comparable<Key>> {
      * @param position The position of the node to swim in the `content` array
      */
     public void swim(int position) {
+        int depth = getNodeDepth(position);
+        if (depth % 2 == 0) {
+            if (position > 1 && higherThan(content[position], content[position / 2])) {
+                swap(position, position / 2);
+                swimMax(position / 2);
+            } else {
+                swimMin(position);
+            }
+        } else {
+            if (position > 1 && lessThan(content[position], content[position / 2])) {
+                swap(position, position / 2);
+                swimMin(position / 2);
+            } else {
+                swimMax(position);
+            }
+        }
+    }
+    private void swimMin(int position) {
+        int grandparent = position / 4;
+        if (grandparent >= 1 && lessThan(content[position], content[grandparent])) {
+            swap(position, grandparent);
+            swimMin(grandparent);
+        }
     }
 
+    private void swimMax(int position) {
+        int grandparent = position / 4;
+        if (grandparent >= 1 && higherThan(content[position], content[grandparent])) {
+            swap(position, grandparent);
+            swimMax(grandparent);
+        }
+    }
     /**
      * Inserts a new value in the heap
      *
