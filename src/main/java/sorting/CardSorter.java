@@ -21,18 +21,18 @@ public class CardSorter {
      * @param list: a list of integers to be sorted.
      */
     public static void sort(LinkedListImpl list) {
-        // Here is a small loop with an invariant that you should try to respect
-        // although, it's not mandatory, try to respect it, it will help you ;-)
-
-        for (int iter = 0; iter < list.getSize() - 1; iter++) {
-            //invariant: the 'iter' biggest elements are at the end of the list and are sorted.
-            //example, at iteration iter=3, the three lasts elements are the three biggest elements in the list, and
-            //they are in the increasing order.
-
-            // TODO
-
+        int listSize = list.getSize();
+        for (int iter = 0; iter < listSize - 1; iter++) {
+            for (int i = 0; i < listSize - iter - 1; i++) {
+                if (list.getFirst() > list.getSecond()) {
+                    list.swap();
+                }
+                list.pop();
+            }
+            for (int i = 0; i <= iter; i++) {
+                list.pop();
+            }
         }
-        // here, if you followed the invariant proposed above, the list should be sorted!
     }
 
 }
