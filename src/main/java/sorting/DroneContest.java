@@ -1,5 +1,7 @@
 package sorting;
 import java.util.*;
+import java.util.stream.Collectors;
+
 /**
  * Context
  * --------
@@ -83,8 +85,25 @@ public class DroneContest {
      * times). Moreover, A.height != B.height.
      */
     public static LinkedList<HeightChange> findHighest(Drone[] participants) {
-        // TODO
-         return null;
+        LinkedList<HeightChange> heightChanges = new LinkedList<>();
+        heightChanges.add(new HeightChange(0, 0));
+
+        int maxTime = Arrays.stream(participants)
+                .mapToInt(drone -> drone.end)
+                .max()
+                .orElse(0);
+
+        for (int time=0 ; time <= maxTime; time++){
+            int finalTime = time;
+            List<Drone> inAirDrones = Arrays.stream(participants)
+                    .filter(drone -> drone.start <= finalTime && drone.end > finalTime).sorted((o1, o2) -> Integer.compare(o2.height, o1.height)).collect(Collectors.toList());
+            int currentMaxHeight = inAirDrones.isEmpty() ? 0 : inAirDrones.get(0).height;
+            assert heightChanges.peekLast() != null;
+            if (heightChanges.peekLast().height != currentMaxHeight) {
+                heightChanges.add(new HeightChange(time, currentMaxHeight));
+            }
+        }
+         return heightChanges;
     }
 
 
