@@ -88,15 +88,15 @@ public class DroneContest {
         LinkedList<HeightChange> heightChanges = new LinkedList<>();
         PriorityQueue<Drone> inAirDrones = new PriorityQueue<>((o1, o2) -> Integer.compare(o2.height, o1.height));
 
-        // Find the maximum time to iterate up to
-        int maxTime = Arrays.stream(participants)
-                .mapToInt(drone -> drone.end)
-                .max()
-                .orElse(0);
+        TreeSet<Integer> timePoints = new TreeSet<>();
+        for (Drone drone : participants) {
+            timePoints.add(drone.start);
+            timePoints.add(drone.end);
+        }
 
         heightChanges.add(new HeightChange(0, 0));
 
-        for (int time = 1; time <= maxTime; time++) {
+        for (int time : timePoints) {
             for (Drone drone : participants) {
                 if (drone.start == time) {
                     inAirDrones.add(drone);
