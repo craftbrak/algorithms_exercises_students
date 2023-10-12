@@ -62,9 +62,6 @@ public class GlobalWarmingImpl extends GlobalWarming {
 
     public GlobalWarmingImpl(int[][] altitude) {
         super(altitude);
-        // TODO
-        // expected pre-processing time in the constructror : O(n^2 log(n^2))
-
     }
 
     /**
@@ -73,11 +70,9 @@ public class GlobalWarmingImpl extends GlobalWarming {
      * @param waterLevel the level of water
      */
     public int nbSafePoints(int waterLevel) {
-        // TODO
-        // expected time complexity O(log(n^2))
-         return -1;
+       return (int) Arrays.stream(this.altitude)
+                .flatMapToInt(Arrays::stream)
+                .filter(x -> x > waterLevel)
+                .count();
     }
-
-
-
 }

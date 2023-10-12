@@ -48,7 +48,6 @@ public class ClosestPair {
                 r--;
             }
         }
-
         return closestPair;
     }
 }
