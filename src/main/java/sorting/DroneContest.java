@@ -86,30 +86,47 @@ public class DroneContest {
      */
     public static LinkedList<HeightChange> findHighest(Drone[] participants) {
         LinkedList<HeightChange> heightChanges = new LinkedList<>();
-        heightChanges.add(new HeightChange(0, 0));
+        PriorityQueue<Drone> inAirDrones = new PriorityQueue<>((o1, o2) -> Integer.compare(o2.height, o1.height));
 
+        // Find the maximum time to iterate up to
         int maxTime = Arrays.stream(participants)
                 .mapToInt(drone -> drone.end)
                 .max()
                 .orElse(0);
 
-        for (int time=0 ; time <= maxTime; time++){
+        heightChanges.add(new HeightChange(0, 0));
+
+        for (int time = 1; time <= maxTime; time++) {
+            for (Drone drone : participants) {
+                if (drone.start == time) {
+                    inAirDrones.add(drone);
+                }
+            }
             int finalTime = time;
-            List<Drone> inAirDrones = Arrays.stream(participants)
-                    .filter(drone -> drone.start <= finalTime && drone.end > finalTime).sorted((o1, o2) -> Integer.compare(o2.height, o1.height)).collect(Collectors.toList());
-            int currentMaxHeight = inAirDrones.isEmpty() ? 0 : inAirDrones.get(0).height;
+            inAirDrones.removeIf(drone -> drone.end == finalTime);
+
+            int currentMaxHeight = inAirDrones.isEmpty() ? 0 : inAirDrones.peek().height;
+
             assert heightChanges.peekLast() != null;
             if (heightChanges.peekLast().height != currentMaxHeight) {
                 heightChanges.add(new HeightChange(time, currentMaxHeight));
             }
         }
-         return heightChanges;
+
+        return heightChanges;
     }
-
-
-
 }
+class Event {
+    public final int time;
+    public final boolean isTakeoff;
+    public final Drone drone;
 
+    public Event(int time, boolean isTakeoff, Drone drone) {
+        this.time = time;
+        this.isTakeoff = isTakeoff;
+        this.drone = drone;
+    }
+}
 class HeightChange {
     public int time;
     public int height;
