@@ -116,17 +116,7 @@ public class DroneContest {
         return heightChanges;
     }
 }
-class Event {
-    public final int time;
-    public final boolean isTakeoff;
-    public final Drone drone;
 
-    public Event(int time, boolean isTakeoff, Drone drone) {
-        this.time = time;
-        this.isTakeoff = isTakeoff;
-        this.drone = drone;
-    }
-}
 class HeightChange {
     public int time;
     public int height;

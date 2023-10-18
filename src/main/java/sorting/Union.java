@@ -1,6 +1,9 @@
 package sorting;
 
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 /**
  * Author Pierre Schaus
  *
@@ -55,8 +58,11 @@ public class Union {
      * @param intervals the intervals to unite.
      */
     public static Interval[] union(Interval[] intervals) {
+        Interval[] unionedIntervals =new Interval[]{};
+
+
         // TODO
-         return new Interval[]{};
+         return unionedIntervals;
 
     }
 
