@@ -12,19 +12,20 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
+// BEGIN STRIP
 import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+// END STRIP
 
 
 @ExtendWith(ConditionalOrderingExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Grade
 public class BinarySearchTreeHigherTest {
-    
+
     private static final Random random = new Random(699645);
-    
+
     @Test
     @Grade(value=5)
     @Order(1)
@@ -49,7 +50,8 @@ public class BinarySearchTreeHigherTest {
         assertEquals(null, bst.higherKey(20));
 
     }
-    
+
+    // BEGIN STRIP
     static Stream<Instance> dataProvider() {
         return IntStream.range(0, 50).mapToObj(i -> {
             BinarySearchTreeHigher<Integer,Integer> tree = new BinarySearchTreeHigher<>();
@@ -91,7 +93,7 @@ public class BinarySearchTreeHigherTest {
     static IntStream dataProviderComplexity() {
         return IntStream.range(0, 5);
     }
-    
+
     @ParameterizedTest
     @Grade(value=1, cpuTimeout=100)
     @MethodSource("dataProviderComplexity")
@@ -125,7 +127,7 @@ public class BinarySearchTreeHigherTest {
         }
         tree.higherKey(min + (max - min)/2);
     }
-    
+
     private static class Instance {
         BinarySearchTreeHigher<Integer, Integer> tree;
         TreeSet<Integer> set;
@@ -139,4 +141,5 @@ public class BinarySearchTreeHigherTest {
             this.max = max;
         }
     }
+    // END STRIP
 }

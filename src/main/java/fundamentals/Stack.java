@@ -1,5 +1,4 @@
 package fundamentals;
-
 import java.util.EmptyStackException;
 
 /**
