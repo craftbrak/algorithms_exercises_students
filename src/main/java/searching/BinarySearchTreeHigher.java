@@ -99,10 +99,16 @@ public class BinarySearchTreeHigher<Key extends Comparable<Key>, Value> {
      * @return the minimum key, null if the tree is empty
      */
     public Key minKey() {
-         return null;
+        return minKey(root);
     }
 
-
+    public Key minKey(Node x){
+        if (x == null) return null;
+        else if (x.left == null) {
+            return x.key;
+        }
+        else return minKey(x.left);
+    }
 
     /**
      * Returns the smallest key strictly greater than the given key, or null if there is no such key.
@@ -112,11 +118,16 @@ public class BinarySearchTreeHigher<Key extends Comparable<Key>, Value> {
      * @return the least key greater than key, or null if there is no such key
      */
     public Key higherKey(Key key) {
-         return null;
+         return higherKey(root,key);
     }
 
     private Key higherKey(Node x, Key key) {
-         return null;
+        if (x == null) return null;
+        int comp = key.compareTo(x.key);
+        if (comp>=0) return higherKey(x.right,key);
+        Key left = higherKey(x.left,key);
+        if (left == null) return x.key;
+        else return left;
     }
 
 }
