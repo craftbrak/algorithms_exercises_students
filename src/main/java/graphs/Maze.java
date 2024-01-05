@@ -1,5 +1,6 @@
 package graphs;
 
+import java.util.*;
 
 /**
  * We are interested in solving a maze represented
@@ -25,10 +26,36 @@ package graphs;
  */
 public class Maze {
     public static Iterable<Integer> shortestPath(int[][] maze, int x1, int y1, int x2, int y2) {
-        // TODO
-         return null;
-    }
+        Queue<Integer> queue = new ArrayDeque<>();
+        queue.add(ind(x1,y1,maze[0].length));
+//TOdo: fix index not using the good indexes , it should use the unflatend index
+        HashMap<Integer,Integer> parentMap= new HashMap<>();
+        parentMap.put(ind(x1,y1,maze[0].length),null);
 
+        while (!queue.isEmpty()){
+            int currentNode = queue.poll();
+            if (currentNode == ind(x2,y2,maze[0].length)){
+                return constructPath(parentMap,ind(x2,y2,maze[0].length));
+            }
+            for (int i = 0; i < maze[currentNode].length; i++) {
+                if (maze[currentNode][i]!=-0 && !parentMap.containsKey(i)){
+                    parentMap.put(i,currentNode);
+                    queue.add(i);
+                };
+            }
+        }
+         return new ArrayList<>();
+    }
+    private static List<Integer> constructPath(HashMap<Integer,Integer> parentPath,Integer end){
+        List<Integer> path = new ArrayList<>();
+        Integer curr = end;
+        while (curr != null){
+            path.add(curr);
+            curr= parentPath.get(curr);
+        }
+        Collections.reverse(path);
+        return path;
+    }
     public static int ind(int x, int y, int lg) {
         return x * lg + y;
     }
@@ -40,5 +67,4 @@ public class Maze {
     public static int col(int pos, int mCols) {
         return pos % mCols;
     }
-
 }
