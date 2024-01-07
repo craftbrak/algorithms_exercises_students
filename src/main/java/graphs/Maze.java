@@ -26,25 +26,43 @@ import java.util.*;
  */
 public class Maze {
     public static Iterable<Integer> shortestPath(int[][] maze, int x1, int y1, int x2, int y2) {
-        Queue<Integer> queue = new ArrayDeque<>();
-        queue.add(ind(x1,y1,maze[0].length));
-//TOdo: fix index not using the good indexes , it should use the unflatend index
-        HashMap<Integer,Integer> parentMap= new HashMap<>();
-        parentMap.put(ind(x1,y1,maze[0].length),null);
+        int n = maze.length, m = maze[0].length;
+        boolean[][] visited = new boolean[n][m];  // Visited array to keep track of visited cells
 
-        while (!queue.isEmpty()){
-            int currentNode = queue.poll();
-            if (currentNode == ind(x2,y2,maze[0].length)){
-                return constructPath(parentMap,ind(x2,y2,maze[0].length));
+        // Check if start or end is a wall or out of bounds
+        if (x1 < 0 || x1 >= n || y1 < 0 || y1 >= m || x2 < 0 || x2 >= n || y2 < 0 || y2 >= m ||
+          maze[x1][y1] == 1 || maze[x2][y2] == 1) return new ArrayList<>();
+
+        Queue<Integer> queue = new ArrayDeque<>();
+        HashMap<Integer, Integer> parentMap = new HashMap<>();
+        int startInd = ind(x1, y1, m);
+        int endInd = ind(x2, y2, m);
+
+        queue.add(startInd);
+        visited[x1][y1] = true;
+        parentMap.put(startInd, null);
+
+        while (!queue.isEmpty()) {
+            int current = queue.poll();
+            int currentX = row(current, m), currentY = col(current, m);
+
+            if (current == endInd) {
+                return constructPath(parentMap, endInd);
             }
-            for (int i = 0; i < maze[currentNode].length; i++) {
-                if (maze[currentNode][i]!=-0 && !parentMap.containsKey(i)){
-                    parentMap.put(i,currentNode);
-                    queue.add(i);
-                };
+
+            // Check all 4 directions
+            int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+            for (int[] dir : directions) {
+                int newX = currentX + dir[0], newY = currentY + dir[1];
+                if (newX >= 0 && newX < n && newY >= 0 && newY < m && !visited[newX][newY] && maze[newX][newY] == 0) {
+                    int newIndex = ind(newX, newY, m);
+                    queue.add(newIndex);
+                    visited[newX][newY] = true;
+                    parentMap.put(newIndex, current);
+                }
             }
         }
-         return new ArrayList<>();
+        return new ArrayList<>();
     }
     private static List<Integer> constructPath(HashMap<Integer,Integer> parentPath,Integer end){
         List<Integer> path = new ArrayList<>();
